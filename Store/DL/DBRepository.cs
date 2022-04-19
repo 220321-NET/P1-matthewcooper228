@@ -1,10 +1,12 @@
 using Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using Serilog;
 
 namespace DL;
 public class DBRepository : IRepository
 {
+    
     private readonly string _connectionString;
     public DBRepository(string connectionString)
     {
@@ -12,6 +14,7 @@ public class DBRepository : IRepository
     }
     public async Task<List<Store>> GetAllStoresAsync()
     {
+        Log.Information("A request was made to see the store locations.");   
         List<Store> allStores = new List<Store>();
         using SqlConnection connection = new SqlConnection(_connectionString);
         connection.Open();

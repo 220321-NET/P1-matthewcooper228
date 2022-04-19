@@ -1,2 +1,3 @@
 ﻿using UI;
-await new MainMenu().Start();
+HttpService http = new HttpService();
+await new MainMenu(http).Start();

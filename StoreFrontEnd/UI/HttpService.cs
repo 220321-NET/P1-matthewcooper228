@@ -16,13 +16,14 @@ public class HttpService
     {
         List<Store> stores = new List<Store>();
         string url = _apiBaseURL + "Store";
-        HttpClient client = new HttpClient();
         try
         {
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            string responseString = await response.Content.ReadAsStringAsync();
-            stores = JsonSerializer.Deserialize<List<Store>>(responseString) ?? new List<Store>();
+            //HttpResponseMessage response = await client.GetAsync(url);
+            //response.EnsureSuccessStatusCode();
+            //string responseString = await response.Content.ReadAsStringAsync();
+            //string responseString = await client.GetStringAsync(url);
+            //stores = JsonSerializer.Deserialize<List<Store>>(responseString) ?? new List<Store>();
+            stores = await JsonSerializer.DeserializeAsync<List<Store>>(await client.GetStreamAsync("Store")) ?? new List<Store>();
         }
         catch (HttpRequestException ex)
         {

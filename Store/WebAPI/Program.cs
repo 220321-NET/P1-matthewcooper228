@@ -1,8 +1,16 @@
 using DL;
 using BL;
 using Models;
+using Serilog;
+
+
+// logging
+using var log = new LoggerConfiguration().WriteTo.File("../logs/logs.txt", rollingInterval: RollingInterval.Day).CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
 
 // Add services to the container.
 
