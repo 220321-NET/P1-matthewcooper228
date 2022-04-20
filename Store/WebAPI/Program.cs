@@ -5,11 +5,15 @@ using Serilog;
 
 
 // logging
-using var log = new LoggerConfiguration().WriteTo.File("../logs/logs.txt", rollingInterval: RollingInterval.Day).CreateLogger();
+// using var log = new LoggerConfiguration().WriteTo.File("../logs/logs.txt", rollingInterval: RollingInterval.Day).CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Host.UseSerilog(
+    (ctx, lc) => lc
+    .WriteTo.Console()
+    .WriteTo.File("../logs/log.txt", rollingInterval: RollingInterval.Day)
+);
 
 
 // Add services to the container.

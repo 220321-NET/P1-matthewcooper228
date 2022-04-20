@@ -5,8 +5,7 @@ using Serilog;
 
 namespace DL;
 public class DBRepository : IRepository
-{
-    
+{   
     private readonly string _connectionString;
     public DBRepository(string connectionString)
     {
