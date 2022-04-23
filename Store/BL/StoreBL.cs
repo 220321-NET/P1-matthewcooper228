@@ -12,4 +12,8 @@ public class StoreBL : IStoreBL
     {
         return await _repo.GetAllStoresAsync();
     }
+    public async Task<List<User>> GetUsersAsync()
+    {
+        return await _repo.GetAllUsersAsync();
+    }
 }

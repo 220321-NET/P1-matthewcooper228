@@ -33,4 +33,28 @@ public class DBRepository : IRepository
         connection.Close();
         return allStores;
     }
+    public async Task<List<User>> GetAllUsersAsync()
+    {
+        Log.Information("A request was made to get all Users.");   
+        List<User> allUsers = new List<User>();
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        connection.Open();
+        using SqlCommand cmd = new SqlCommand("Select * FROM Users", connection);
+        using SqlDataReader reader = cmd.ExecuteReader();
+        while(await reader.ReadAsync())
+        {
+            int id = reader.GetInt32(0);
+            string name = reader.GetString(1);
+            bool isEmployee = reader.GetBoolean(2);
+            User user = new User{
+                Id = id,
+                Name = name,
+                IsEmployee = isEmployee
+            };
+            allUsers.Add(user);
+        }
+        reader.Close();
+        connection.Close();
+        return allUsers;
+    }
 }

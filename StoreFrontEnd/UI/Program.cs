@@ -1,5 +1,3 @@
-﻿using UI;
-
-
-HttpService http = new HttpService();
-await new MainMenu(http).Start();
+using UI;
+HttpService httpService = new HttpService();
+await new MainMenu(httpService).Start();
