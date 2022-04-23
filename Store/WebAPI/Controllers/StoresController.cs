@@ -8,16 +8,16 @@ namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class StoreController : ControllerBase
+public class StoresController : ControllerBase
 {
     private readonly IStoreBL _bl;
 
-    public StoreController(IStoreBL bl)
+    public StoresController(IStoreBL bl)
     {
         _bl = bl;
     }
     
-    // GET: api/<StoreController>
+    // GET: api/<StoresController>
     [HttpGet]
     public async Task<List<Store>> GetAsync()
     {

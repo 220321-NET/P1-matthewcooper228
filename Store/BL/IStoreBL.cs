@@ -4,5 +4,6 @@ namespace BL;
 public interface IStoreBL
 {
     Task<List<Store>> GetStoresAsync();
-    Task<List<User>> GetUsers();
+    Task<List<User>> GetUsersAsync();
+    User CreateUser(User userToCreate);
 }

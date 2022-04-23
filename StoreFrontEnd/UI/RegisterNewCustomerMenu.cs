@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Models;
 
 namespace UI;
 internal class RegisterNewCustomerMenu
@@ -20,6 +21,20 @@ internal class RegisterNewCustomerMenu
             Console.WriteLine("Invalid input.");
             goto RegisterUser;
         }
-        
+        List<User> users = await _httpService.GetAllUsersAsync();
+        foreach(User user in users)
+        {
+            if (userName == user.name)
+            {
+                Console.WriteLine("That username is taken.");
+                goto RegisterUser;
+            }
+        }
+        User userToCreate = new User(){
+            name = userName,
+            isEmployee = false
+        };
+        User createdUser = await _httpService.CreateUserAsync(userToCreate);
+        Console.WriteLine("A new account has been created for customer " + createdUser.name + ".");
     }
 }

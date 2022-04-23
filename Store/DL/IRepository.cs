@@ -4,4 +4,5 @@ public interface IRepository
 {
     Task<List<Store>> GetAllStoresAsync();
     Task<List<User>> GetAllUsersAsync();
+    User CreateUser(User userToCreate);
 }

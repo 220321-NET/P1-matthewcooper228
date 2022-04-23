@@ -16,4 +16,8 @@ public class StoreBL : IStoreBL
     {
         return await _repo.GetAllUsersAsync();
     }
+    public User CreateUser(User userToCreate)
+    {
+        return _repo.CreateUser(userToCreate);
+    }
 }

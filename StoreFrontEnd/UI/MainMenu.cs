@@ -34,6 +34,12 @@ internal class MainMenu
                     case "1":
                         await new RegisterNewCustomerMenu(_httpService).Start();
                     break;
+                    case "2":
+                        await new CheckIfCustomerExistsMenu(_httpService).Start();
+                    break;
+                    case "3":
+                        await new SeeAStoresInventoryMenu(_httpService).Start();
+                    break;
                     case "x":
                     case "X":
                         exit = true;

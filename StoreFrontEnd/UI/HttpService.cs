@@ -18,12 +18,7 @@ public class HttpService
         string url = _apiBaseURL + "Store";
         try
         {
-            //HttpResponseMessage response = await client.GetAsync(url);
-            //response.EnsureSuccessStatusCode();
-            //string responseString = await response.Content.ReadAsStringAsync();
-            //string responseString = await client.GetStringAsync(url);
-            //stores = JsonSerializer.Deserialize<List<Store>>(responseString) ?? new List<Store>();
-            stores = await JsonSerializer.DeserializeAsync<List<Store>>(await client.GetStreamAsync("Store")) ?? new List<Store>();
+            stores = await JsonSerializer.DeserializeAsync<List<Store>>(await client.GetStreamAsync("Stores")) ?? new List<Store>();
         }
         catch (HttpRequestException ex)
         {
@@ -31,5 +26,33 @@ public class HttpService
         }
         return stores;
     }
-
+    public async Task<List<User>> GetAllUsersAsync()
+    {
+        List<User> users = new List<User>();
+        string url = _apiBaseURL + "Users";
+        try
+        {
+            users = await JsonSerializer.DeserializeAsync<List<User>>(await client.GetStreamAsync("Users")) ?? new List<User>();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine("Something bad happened: " + ex);
+        }
+        return users;
+    }
+        public async Task<User> CreateUserAsync(User userToCreate)
+    {
+        string serializedUser = JsonSerializer.Serialize(userToCreate);
+        StringContent content = new StringContent(serializedUser, Encoding.UTF8, "application/json");
+        try
+        {
+            HttpResponseMessage response = await client.PostAsync("Users", content);
+            response.EnsureSuccessStatusCode();
+            return await JsonSerializer.DeserializeAsync<User>(await response.Content.ReadAsStreamAsync()) ?? new User();
+        }
+        catch(HttpRequestException)
+        {
+            throw;
+        }
+    }
 }

@@ -57,4 +57,27 @@ public class DBRepository : IRepository
         connection.Close();
         return allUsers;
     }
+    public User CreateUser(User userToCreate)
+    {
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        connection.Open();
+
+        using SqlCommand cmd = new SqlCommand("INSERT INTO Users(Name, IsEmployee) OUTPUT INSERTED.Id VALUES (@name, @isEmployee)", connection);
+
+        cmd.Parameters.AddWithValue("@name", userToCreate.Name);
+        cmd.Parameters.AddWithValue("@isEmployee", userToCreate.IsEmployee);
+
+        try
+        {
+            userToCreate.Id = (int) cmd.ExecuteScalar();
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        connection.Close();
+        
+        return userToCreate;
+    }
 }
