@@ -12,6 +12,62 @@ public class HttpService
     {
         client.BaseAddress = new Uri(_apiBaseURL);
     }
+    public async Task<List<InventoryItem>> GetAllInventoryItemsAsync()
+    {
+        List<InventoryItem> inventoryItems = new List<InventoryItem>();
+        string url = _apiBaseURL + "InventoryItems";
+        try
+        {
+            inventoryItems = await JsonSerializer.DeserializeAsync<List<InventoryItem>>(await client.GetStreamAsync("InventoryItems")) ?? new List<InventoryItem>();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine("Something bad happened: " + ex);
+        }
+        return inventoryItems;
+    }
+    public async Task<List<Order>> GetAllOrdersAsync()
+    {
+        List<Order> orders = new List<Order>();
+        string url = _apiBaseURL + "Orders";
+        try
+        {
+            orders = await JsonSerializer.DeserializeAsync<List<Order>>(await client.GetStreamAsync("Orders")) ?? new List<Order>();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine("Something bad happened: " + ex);
+        }
+        return orders;
+    }
+    public async Task<List<OrderItem>> GetAllOrderItemsAsync()
+    {
+        List<OrderItem> orderItems = new List<OrderItem>();
+        string url = _apiBaseURL + "OrderItems";
+        try
+        {
+            orderItems = await JsonSerializer.DeserializeAsync<List<OrderItem>>(await client.GetStreamAsync("OrderItems")) ?? new List<OrderItem>();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine("Something bad happened: " + ex);
+        }
+        return orderItems;
+    }
+    public async Task<List<Product>> GetAllProductsAsync()
+    {
+        List<Product> products = new List<Product>();
+        string url = _apiBaseURL + "Products";
+        try
+        {
+            products = await JsonSerializer.DeserializeAsync<List<Product>>(await client.GetStreamAsync("Products")) ?? new List<Product>();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine("Something bad happened: " + ex);
+        }
+        return products;
+    }
     public async Task<List<Store>> GetAllStoresAsync()
     {
         List<Store> stores = new List<Store>();
@@ -55,4 +111,6 @@ public class HttpService
             throw;
         }
     }
+
+
 }

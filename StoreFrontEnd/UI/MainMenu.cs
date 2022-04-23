@@ -25,7 +25,7 @@ internal class MainMenu
         Console.WriteLine("[9] I am an employee and I want to see order history of a store location.");
         Console.WriteLine("[10] I am an employee and I want to replenish the the inventory of a store location.");
         Console.WriteLine("[X] I want to exit the program.");
-        Console.WriteLine("Type a number or x and press enter: ");
+        Console.Write("Type a number or x and press enter: ");
         string? input = Console.ReadLine();
             if(!string.IsNullOrWhiteSpace(input))
             {
@@ -44,6 +44,9 @@ internal class MainMenu
                     case "X":
                         exit = true;
                     break;
+                    default:
+                        Console.WriteLine("Invalid Input.");
+                    break;    
                 }
             }
         }
