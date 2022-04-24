@@ -17,7 +17,6 @@ internal class PlaceAnOrderMenu
         List<Product> products = await _httpService.GetAllProductsAsync();
         List<Store> stores = await _httpService.GetAllStoresAsync();
         List<User> users = await _httpService.GetAllUsersAsync();
-        Order currentOrder = new Order();
         Store currentStore = new Store();
         User currentUser = new User();
 
@@ -47,21 +46,49 @@ internal class PlaceAnOrderMenu
         }
         else
         {
-            ChooseAStore:
-            Console.WriteLine("Which store would like to place an order with?");
-            foreach(Store store in stores)
+            bool exit = false;
+            while(!exit)
             {
-                Console.WriteLine("[" + store.id + "] " + store.address);
+                ChooseAStore:
+                Console.WriteLine("Which store would like to place an order with?");
+                foreach(Store store in stores)
+                {
+                    Console.WriteLine("[" + store.id + "] " + store.address);
+                }
+                Console.Write("Type a number or x and press enter: ");
+                string? storeIdInput = Console.ReadLine();
+                string storeIdPattern = @"^[0-9]+$";
+                if (storeIdInput == "x" || storeIdInput == "X") exit = true;
+                if (storeIdInput == null || !Regex.Match(storeIdInput, storeIdPattern).Success)
+                {
+                    Console.WriteLine("Invalid input.");
+                    goto ChooseAStore;
+                }
+                foreach (Store store in stores)
+                {
+                    if (store.id == Int32.Parse(storeIdInput))
+                    {
+                        Console.WriteLine("Here are the products available at " + store.address);
+                    }
+                    foreach (Product product in products)
+                    {
+                        foreach (InventoryItem inventoryItem in inventoryItems)
+                        {
+                            if (
+                                inventoryItem.productId == product.id &&
+                                store.id == inventoryItem.storeId &&
+                                Int32.Parse(storeIdInput) == store.id
+                            )
+                            {
+                                Console.WriteLine(product.name + " price: $" + product.price + " stock: " + inventoryItem.quantity);
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine("Do you want to start an order at this location?");
+                Console.Write("Type a number or x and press enter: ");
+                string? startAnOrderChoice = Console.ReadLine();                
             }
-            Console.Write("Type a number or x and press enter: ");
-            string? storeIdInput = Console.ReadLine();
-            string storeIdPattern = @"^[0-9]+$";
-            if (storeIdInput == null || !Regex.Match(storeIdInput, storeIdPattern).Success)
-            {
-                Console.WriteLine("Invalid input.");
-                goto ChooseAStore;
-            }
-            
         }
     }
 }
