@@ -12,6 +12,7 @@ internal class SeeAStoresInventoryMenu
     public async Task Start()
     {
         List<Store> stores = await _httpService.GetAllStoresAsync();
+        List<Product> products = await _httpService.GetAllProductsAsync();
         List<InventoryItem> inventoryItems = await _httpService.GetAllInventoryItemsAsync();
         bool exit = false;
         while(!exit)
@@ -43,7 +44,16 @@ internal class SeeAStoresInventoryMenu
                 }
             }
             Console.WriteLine("Here is the inventory at store " + chosenStore.id + " (" + chosenStore.address + "):");
-
+            foreach(InventoryItem inventoryItem in inventoryItems)
+            {
+                foreach(Product product in products)
+                {
+                    if (inventoryItem.storeId == chosenStore.id && inventoryItem.productId == product.id)
+                    {
+                        Console.WriteLine("[" + inventoryItem.id + "] " + product.name + " price: $" + product.price + " stock: " + inventoryItem.quantity);
+                    }
+                }
+            }
             exit = true;
         }
     }

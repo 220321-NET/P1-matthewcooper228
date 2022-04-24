@@ -40,6 +40,9 @@ internal class MainMenu
                     case "3":
                         await new SeeAStoresInventoryMenu(_httpService).Start();
                     break;
+                    case "8":
+                        await new PlaceAnOrderMenu(_httpService).Start();
+                    break;
                     case "x":
                     case "X":
                         exit = true;
