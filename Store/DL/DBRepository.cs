@@ -210,13 +210,10 @@ public class DBRepository : IRepository
     {
         using SqlConnection connection = new SqlConnection(_connectionString);
         connection.Open();
-
         using SqlCommand cmd = new SqlCommand("INSERT INTO OrderItems(OrderId, ProductId, Quantity) OUTPUT INSERTED.Id VALUES (@orderId, @productId, @quantity)", connection);
-
         cmd.Parameters.AddWithValue("@orderId", orderItemToCreate.OrderId);
         cmd.Parameters.AddWithValue("@productId", orderItemToCreate.ProductId);
         cmd.Parameters.AddWithValue("@quantity", orderItemToCreate.Quantity);
-
         try
         {
             orderItemToCreate.Id = (int) cmd.ExecuteScalar();
@@ -225,35 +222,16 @@ public class DBRepository : IRepository
         {
             Console.WriteLine(e.Message);
         }
-
         connection.Close();
-        
         return orderItemToCreate;
     }
     public OrderItem IncrementOrderItem(OrderItem orderItemToIncrement)
     {
-    /*    using SqlConnection connection = new SqlConnection(_connectionString);
+        using SqlConnection connection = new SqlConnection(_connectionString);
         connection.Open();
-
-        using SqlCommand cmd = new SqlCommand("INSERT INTO OrderItems(OrderId, ProductId, Quantity) OUTPUT INSERTED.Id VALUES (@orderId, @productId, @quantity)", connection);
-
-        cmd.Parameters.AddWithValue("@orderId", orderItemToCreate.OrderId);
-        cmd.Parameters.AddWithValue("@productId", orderItemToCreate.ProductId);
-        cmd.Parameters.AddWithValue("@quantity", orderItemToCreate.Quantity);
-
-        try
-        {
-            orderItemToCreate.Id = (int) cmd.ExecuteScalar();
-        }
-        catch(Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-
+        using SqlCommand cmd = new SqlCommand("UPDATE OrderItems SET Quantity = Quantity + 1 WHERE Id = @id", connection);
+        cmd.Parameters.AddWithValue("@id", orderItemToIncrement.Id);
         connection.Close();
-        
-        return orderItemToCreate;
-        */
-        return new OrderItem();
+        return orderItemToIncrement;  
     }
 }

@@ -165,6 +165,7 @@ internal class PlaceAnOrderMenu
                                 if(currentInventoryItem.productId == orderItem.productId)
                                 {
                                     // the order item already exists so increment quantity
+                                    Console.WriteLine("This item is already in your order");
                                 }
                             }
                             // the order item does not exist, create a new order item with quantity 1
