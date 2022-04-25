@@ -9,4 +9,7 @@ public interface IRepository
     Task<List<Store>> GetAllStoresAsync();
     Task<List<User>> GetAllUsersAsync();
     User CreateUser(User userToCreate);
+    Order CreateOrder(Order orderToCreate);
+    OrderItem CreateOrderItem(OrderItem orderItemToCreate);
+    OrderItem IncrementOrderItem(OrderItem orderItemToIncrement);
 }

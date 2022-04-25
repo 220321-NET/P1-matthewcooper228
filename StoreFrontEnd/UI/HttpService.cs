@@ -96,7 +96,7 @@ public class HttpService
         }
         return users;
     }
-        public async Task<User> CreateUserAsync(User userToCreate)
+    public async Task<User> CreateUserAsync(User userToCreate)
     {
         string serializedUser = JsonSerializer.Serialize(userToCreate);
         StringContent content = new StringContent(serializedUser, Encoding.UTF8, "application/json");
@@ -111,6 +111,47 @@ public class HttpService
             throw;
         }
     }
-
-
+    public async Task<Order> CreateOrderAsync(Order orderToCreate)
+    {
+        string serializedOrder = JsonSerializer.Serialize(orderToCreate);
+        StringContent content = new StringContent(serializedOrder, Encoding.UTF8, "application/json");
+        try
+        {
+            HttpResponseMessage response = await client.PostAsync("Orders", content);
+            response.EnsureSuccessStatusCode();
+            return await JsonSerializer.DeserializeAsync<Order>(await response.Content.ReadAsStreamAsync()) ?? new Order();
+        }
+        catch(HttpRequestException)
+        {
+            throw;
+        }
+    }
+    public async Task<OrderItem> CreateOrderItemAsync(OrderItem orderItemToCreate)
+    {
+        string serializedOrderItem = JsonSerializer.Serialize(orderItemToCreate);
+        StringContent content = new StringContent(serializedOrderItem, Encoding.UTF8, "application/json");
+        try
+        {
+            HttpResponseMessage response = await client.PostAsync("OrderItems", content);
+            response.EnsureSuccessStatusCode();
+            return await JsonSerializer.DeserializeAsync<OrderItem>(await response.Content.ReadAsStreamAsync()) ?? new OrderItem();
+        }
+        catch(HttpRequestException)
+        {
+            throw;
+        }
+    }
+    public async void IncrementOrderItem(OrderItem updatedOrderItem)
+    {
+        string serializedUpdatedOrderItem = JsonSerializer.Serialize(updatedOrderItem);
+        StringContent content = new StringContent(serializedUpdatedOrderItem, Encoding.UTF8, "application/json");
+        try
+        {
+            HttpResponseMessage response = await client.PutAsync("OrderItems", content);
+        }
+        catch(HttpRequestException)
+        {
+            throw;
+        }
+    }
 }

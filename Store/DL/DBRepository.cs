@@ -182,4 +182,78 @@ public class DBRepository : IRepository
         
         return userToCreate;
     }
+    public Order CreateOrder(Order orderToCreate)
+    {
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        connection.Open();
+
+        using SqlCommand cmd = new SqlCommand("INSERT INTO Orders(UserId, StoreId, DatePlaced) OUTPUT INSERTED.Id VALUES (@userId, @storeId, @datePlaced)", connection);
+
+        cmd.Parameters.AddWithValue("@userId", orderToCreate.UserId);
+        cmd.Parameters.AddWithValue("@storeId", orderToCreate.StoreId);
+        cmd.Parameters.AddWithValue("@datePlaced", orderToCreate.DatePlaced);
+
+        try
+        {
+            orderToCreate.Id = (int) cmd.ExecuteScalar();
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        connection.Close();
+        
+        return orderToCreate;
+    }
+    public OrderItem CreateOrderItem(OrderItem orderItemToCreate)
+    {
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        connection.Open();
+
+        using SqlCommand cmd = new SqlCommand("INSERT INTO OrderItems(OrderId, ProductId, Quantity) OUTPUT INSERTED.Id VALUES (@orderId, @productId, @quantity)", connection);
+
+        cmd.Parameters.AddWithValue("@orderId", orderItemToCreate.OrderId);
+        cmd.Parameters.AddWithValue("@productId", orderItemToCreate.ProductId);
+        cmd.Parameters.AddWithValue("@quantity", orderItemToCreate.Quantity);
+
+        try
+        {
+            orderItemToCreate.Id = (int) cmd.ExecuteScalar();
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        connection.Close();
+        
+        return orderItemToCreate;
+    }
+    public OrderItem IncrementOrderItem(OrderItem orderItemToIncrement)
+    {
+    /*    using SqlConnection connection = new SqlConnection(_connectionString);
+        connection.Open();
+
+        using SqlCommand cmd = new SqlCommand("INSERT INTO OrderItems(OrderId, ProductId, Quantity) OUTPUT INSERTED.Id VALUES (@orderId, @productId, @quantity)", connection);
+
+        cmd.Parameters.AddWithValue("@orderId", orderItemToCreate.OrderId);
+        cmd.Parameters.AddWithValue("@productId", orderItemToCreate.ProductId);
+        cmd.Parameters.AddWithValue("@quantity", orderItemToCreate.Quantity);
+
+        try
+        {
+            orderItemToCreate.Id = (int) cmd.ExecuteScalar();
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        connection.Close();
+        
+        return orderItemToCreate;
+        */
+        return new OrderItem();
+    }
 }

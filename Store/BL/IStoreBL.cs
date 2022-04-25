@@ -10,4 +10,8 @@ public interface IStoreBL
     Task<List<Store>> GetStoresAsync();
     Task<List<User>> GetUsersAsync();
     User CreateUser(User userToCreate);
+    Order CreateOrder(Order orderToCreate);
+    OrderItem CreateOrderItem(OrderItem orderItemToCreate);
+    OrderItem IncrementOrderItem(OrderItem orderItemToIncrement);
+    
 }

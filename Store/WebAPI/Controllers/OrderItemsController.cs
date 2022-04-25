@@ -23,4 +23,20 @@ public class OrderItemsController : ControllerBase
     {
         return await _bl.GetOrderItemsAsync();
     }
+    // POST api/<OrderItemsController>
+    [HttpPost]
+    public ActionResult<OrderItem> Post([FromBody] OrderItem orderItemToCreate)
+    {
+        OrderItem createdOrderItem = _bl.CreateOrderItem(orderItemToCreate);
+        List<OrderItem> orderItems = new List<OrderItem>();
+        return Created("api/OrderItems", createdOrderItem);
+    }
+    // PUT api/<OrderItemsController>
+    [HttpPut]
+    public ActionResult<OrderItem> Put([FromBody] OrderItem orderItemToIncrement)
+    {
+        OrderItem incrementedOrderItem = _bl.IncrementOrderItem(orderItemToIncrement);
+        List<OrderItem> orderItems = new List<OrderItem>();
+        return Created("api/OrderItems", incrementedOrderItem);
+    }
 }

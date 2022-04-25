@@ -23,4 +23,12 @@ public class OrdersController : ControllerBase
     {
         return await _bl.GetOrdersAsync();
     }
+    // POST api/<OrdersController>
+    [HttpPost]
+    public ActionResult<Order> Post([FromBody] Order orderToCreate)
+    {
+        Order createdOrder = _bl.CreateOrder(orderToCreate);
+        List<Order> orders = new List<Order>();
+        return Created("api/Orders", createdOrder);
+    }
 }

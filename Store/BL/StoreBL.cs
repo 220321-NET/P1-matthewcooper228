@@ -36,4 +36,17 @@ public class StoreBL : IStoreBL
     {
         return _repo.CreateUser(userToCreate);
     }
+    public Order CreateOrder(Order orderToCreate)
+    {
+        return _repo.CreateOrder(orderToCreate);
+    }
+    public OrderItem CreateOrderItem(OrderItem orderItemToCreate)
+    {
+        return _repo.CreateOrderItem(orderItemToCreate);
+    }
+    public OrderItem IncrementOrderItem(OrderItem orderItemToIncrement)
+    {
+        return _repo.IncrementOrderItem(orderItemToIncrement);
+    }
+
 }
