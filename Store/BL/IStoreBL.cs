@@ -12,6 +12,6 @@ public interface IStoreBL
     User CreateUser(User userToCreate);
     Order CreateOrder(Order orderToCreate);
     OrderItem CreateOrderItem(OrderItem orderItemToCreate);
-    OrderItem IncrementOrderItem(OrderItem orderItemToIncrement);
-    
+    public Task decrementInventoryItemAsync(InventoryItem inventoryItem);
+    public Task incrementOrderItemAsync(OrderItem orderItem);
 }

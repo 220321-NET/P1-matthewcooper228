@@ -31,12 +31,9 @@ public class OrderItemsController : ControllerBase
         List<OrderItem> orderItems = new List<OrderItem>();
         return Created("api/OrderItems", createdOrderItem);
     }
-    // PUT api/<OrderItemsController>
     [HttpPut]
-    public ActionResult<OrderItem> Put([FromBody] OrderItem orderItemToIncrement)
+    public async Task incrementOrderItem(OrderItem orderItem)
     {
-        OrderItem incrementedOrderItem = _bl.IncrementOrderItem(orderItemToIncrement);
-        List<OrderItem> orderItems = new List<OrderItem>();
-        return Created("api/OrderItems", incrementedOrderItem);
+        await _bl.incrementOrderItemAsync(orderItem);
     }
 }

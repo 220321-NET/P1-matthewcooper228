@@ -225,13 +225,23 @@ public class DBRepository : IRepository
         connection.Close();
         return orderItemToCreate;
     }
-    public OrderItem IncrementOrderItem(OrderItem orderItemToIncrement)
+    public async Task decrementInventoryItemAsync(InventoryItem inventoryItem)
     {
         using SqlConnection connection = new SqlConnection(_connectionString);
         connection.Open();
-        using SqlCommand cmd = new SqlCommand("UPDATE OrderItems SET Quantity = Quantity + 1 WHERE Id = @id", connection);
-        cmd.Parameters.AddWithValue("@id", orderItemToIncrement.Id);
+        SqlCommand update = new SqlCommand("UPDATE InventoryItems SET Quantity = Quantity - 1 WHERE Id = @inventoryItemId", connection);
+        update.Parameters.AddWithValue("@inventoryItemId", inventoryItem.Id);
+        await update.ExecuteNonQueryAsync();
         connection.Close();
-        return orderItemToIncrement;  
     }
+    public async Task incrementOrderItemAsync(OrderItem orderItem)
+    {
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        connection.Open();
+        SqlCommand update = new SqlCommand("UPDATE OrderItems SET Quantity = Quantity + 1 WHERE Id = @orderItemId", connection);
+        update.Parameters.AddWithValue("@orderItemId", orderItem.Id);
+        await update.ExecuteNonQueryAsync();
+        connection.Close();
+    }
+
 }

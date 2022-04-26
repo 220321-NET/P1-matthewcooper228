@@ -23,4 +23,11 @@ public class InventoryItemsController : ControllerBase
     {
         return await _bl.GetInventoryItemsAsync();
     }
+    [HttpPut]
+    public async Task decrementInventoryItem(InventoryItem inventoryItem)
+    {
+        await _bl.decrementInventoryItemAsync(inventoryItem);
+    }
+
+
 }

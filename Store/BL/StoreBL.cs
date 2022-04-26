@@ -44,9 +44,13 @@ public class StoreBL : IStoreBL
     {
         return _repo.CreateOrderItem(orderItemToCreate);
     }
-    public OrderItem IncrementOrderItem(OrderItem orderItemToIncrement)
+    public async Task decrementInventoryItemAsync(InventoryItem inventoryItem)
     {
-        return _repo.IncrementOrderItem(orderItemToIncrement);
+        await _repo.decrementInventoryItemAsync(inventoryItem);
+    }
+    public async Task incrementOrderItemAsync(OrderItem orderItem)
+    {
+        await _repo.incrementOrderItemAsync(orderItem);
     }
 
 }

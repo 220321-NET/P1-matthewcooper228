@@ -141,13 +141,58 @@ public class HttpService
             throw;
         }
     }
-    public async void IncrementOrderItem(OrderItem updatedOrderItem)
+    public async Task<OrderItem> IncrementOrderItem(OrderItem updatedOrderItem)
     {
         string serializedUpdatedOrderItem = JsonSerializer.Serialize(updatedOrderItem);
         StringContent content = new StringContent(serializedUpdatedOrderItem, Encoding.UTF8, "application/json");
         try
         {
             HttpResponseMessage response = await client.PutAsync("OrderItems", content);
+            response.EnsureSuccessStatusCode();
+            return await JsonSerializer.DeserializeAsync<OrderItem>(await response.Content.ReadAsStreamAsync()) ?? new OrderItem();
+        }
+        catch(HttpRequestException)
+        {
+            throw;
+        }
+    }
+    public async Task<InventoryItem> DecrementInventoryItem(InventoryItem inventoryItemOrdered)
+    {
+        string serializedInventoryItemOrdered = JsonSerializer.Serialize(inventoryItemOrdered);
+        StringContent content = new StringContent(serializedInventoryItemOrdered, Encoding.UTF8, "application/json");
+        try
+        {
+            HttpResponseMessage response = await client.PutAsync("InventoryItems", content);
+            response.EnsureSuccessStatusCode();
+            return await JsonSerializer.DeserializeAsync<InventoryItem>(await response.Content.ReadAsStreamAsync()) ?? new InventoryItem();
+        }
+        catch(HttpRequestException)
+        {
+            throw;
+        }
+    }
+    public async Task decrementInventoryItemAsync(InventoryItem inventoryItem)
+    {
+        string serializedInventoryItem = JsonSerializer.Serialize(inventoryItem);
+        StringContent content = new StringContent(serializedInventoryItem, Encoding.UTF8, "application/json");
+        try
+        {
+            HttpResponseMessage response = await client.PutAsync("InventoryItems", content);
+            response.EnsureSuccessStatusCode();
+        }
+        catch(HttpRequestException)
+        {
+            throw;
+        }
+    }
+    public async Task incrementOrderItemAsync(OrderItem orderItem)
+    {
+        string serializedOrderItem = JsonSerializer.Serialize(orderItem);
+        StringContent content = new StringContent(serializedOrderItem, Encoding.UTF8, "application/json");
+        try
+        {
+            HttpResponseMessage response = await client.PutAsync("OrderItems", content);
+            response.EnsureSuccessStatusCode();
         }
         catch(HttpRequestException)
         {

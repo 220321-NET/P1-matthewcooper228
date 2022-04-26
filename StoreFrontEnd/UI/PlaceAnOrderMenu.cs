@@ -151,7 +151,7 @@ internal class PlaceAnOrderMenu
                         }
                         else
                         {
-                            // check if this order item already exists
+                            // get the inventory item chosen and store it
                             InventoryItem currentInventoryItem = new InventoryItem();
                             foreach(InventoryItem inventoryItem in inventoryItems)
                             {
@@ -160,22 +160,10 @@ internal class PlaceAnOrderMenu
                                     currentInventoryItem = inventoryItem;
                                 }
                             }
-                            foreach(OrderItem orderItem in orderItems)
-                            {
-                                if(currentInventoryItem.productId == orderItem.productId)
-                                {
-                                    // the order item already exists so increment quantity
-                                    Console.WriteLine("This item is already in your order");
-                                }
-                            }
-                            // the order item does not exist, create a new order item with quantity 1
-                            OrderItem orderItemToCreate = new OrderItem(){
-                                orderId = placedOrder.id,
-                                productId = currentInventoryItem.productId,
-                                quantity = 1
-                            };
-                            OrderItem createdOrderItem = await _httpService.CreateOrderItemAsync(orderItemToCreate);
-                            // decrement the inventory item by 1
+                            // check if there is already an order item for that inventory Item
+
+                                // if there is a
+                            
                         }
                     }
                 }
