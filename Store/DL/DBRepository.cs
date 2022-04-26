@@ -243,5 +243,14 @@ public class DBRepository : IRepository
         await update.ExecuteNonQueryAsync();
         connection.Close();
     }
+        public async Task replenishStoreInventoryAsync(Store store)
+    {
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        connection.Open();
+        SqlCommand update = new SqlCommand("UPDATE InventoryItems SET Quantity = 10 WHERE StoreId = @storeId", connection);
+        update.Parameters.AddWithValue("@storeId", store.Id);
+        await update.ExecuteNonQueryAsync();
+        connection.Close();
+    }
 
 }

@@ -156,21 +156,6 @@ public class HttpService
             throw;
         }
     }
-    public async Task<InventoryItem> DecrementInventoryItem(InventoryItem inventoryItemOrdered)
-    {
-        string serializedInventoryItemOrdered = JsonSerializer.Serialize(inventoryItemOrdered);
-        StringContent content = new StringContent(serializedInventoryItemOrdered, Encoding.UTF8, "application/json");
-        try
-        {
-            HttpResponseMessage response = await client.PutAsync("InventoryItems", content);
-            response.EnsureSuccessStatusCode();
-            return await JsonSerializer.DeserializeAsync<InventoryItem>(await response.Content.ReadAsStreamAsync()) ?? new InventoryItem();
-        }
-        catch(HttpRequestException)
-        {
-            throw;
-        }
-    }
     public async Task decrementInventoryItemAsync(InventoryItem inventoryItem)
     {
         string serializedInventoryItem = JsonSerializer.Serialize(inventoryItem);
@@ -192,6 +177,20 @@ public class HttpService
         try
         {
             HttpResponseMessage response = await client.PutAsync("OrderItems", content);
+            response.EnsureSuccessStatusCode();
+        }
+        catch(HttpRequestException)
+        {
+            throw;
+        }
+    }
+    public async Task replenishStoreInventoryAsync(Store store)
+    {
+        string serializedStore = JsonSerializer.Serialize(store);
+        StringContent content = new StringContent(serializedStore, Encoding.UTF8, "application/json");
+        try
+        {
+            HttpResponseMessage response = await client.PutAsync("Stores", content);
             response.EnsureSuccessStatusCode();
         }
         catch(HttpRequestException)

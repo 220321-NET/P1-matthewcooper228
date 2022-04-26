@@ -52,5 +52,9 @@ public class StoreBL : IStoreBL
     {
         await _repo.incrementOrderItemAsync(orderItem);
     }
+    public async Task replenishStoreInventoryAsync(Store store)
+    {
+        await _repo.replenishStoreInventoryAsync(store);
+    }
 
 }

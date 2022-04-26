@@ -23,7 +23,7 @@ internal class SeeStoreOrderHistoryMenu
         do
         {
             Login:
-            Console.Write("Enter your username and press enter: ");
+            Console.Write("Enter your employee username and press enter: ");
             string? userName = Console.ReadLine();
             string pattern = @"^[a-zA-z]{1,50}$";
             if (userName == null || !Regex.Match(userName, pattern).Success)
@@ -34,7 +34,7 @@ internal class SeeStoreOrderHistoryMenu
             bool thereIsAnExistingAccount = false;
             foreach(User user in users)
             {
-                if (userName == user.name)
+                if (userName == user.name && user.isEmployee == true)
                 {
                     thereIsAnExistingAccount = true;
                     currentUser = user;
@@ -42,34 +42,62 @@ internal class SeeStoreOrderHistoryMenu
             }
             if(!thereIsAnExistingAccount)
             {
-                Console.WriteLine("There is no existing account for that username. Please create an account ");
+                Console.WriteLine("There is no existing employee account for that username.");
+                exit = true;
             }
             else
             {
-                foreach(Order order in orders)
+                ChooseAStore:
+                Console.WriteLine("Select a store to see its order history:");
+                foreach(Store store in stores)
                 {
-                    if(order.userId == currentUser.id)
+                    Console.WriteLine("[" + store.id + "] " + store.address);
+                }
+                Console.Write("Type a number or x and press enter: ");
+                string? input = Console.ReadLine();
+                string storeIdPattern = @"^[0-9]+$";
+                if (input == null || !Regex.Match(input, storeIdPattern).Success)
+                {
+                    Console.WriteLine("Invalid input.");
+                    goto ChooseAStore;
+                }
+                else if (input == "x" || input == "X")
+                {
+                    exit = true;
+                }
+                else
+                {
+                    foreach(Store store in stores)
                     {
-                        total = 0;
-                        Console.WriteLine("Order: " + order.id + " Date: " + order.datePlaced);
-                        foreach(OrderItem orderItem in orderItems)
+                        if (Int32.Parse(input) == store.id)
                         {
-                            if (orderItem.orderId == order.id)
+                            foreach(Order order in orders)
                             {
-                                foreach(Product product in products)
+                                if(order.storeId == store.id)
                                 {
-                                    if(product.id == orderItem.productId)
+                                    Console.WriteLine("Order: " + order.id + " Date: " + order.datePlaced);
+                                    foreach(OrderItem orderItem in orderItems)
                                     {
-                                        Console.WriteLine(product.name + ": " + orderItem.quantity + " X $" + product.price + " = $" + (product.price * orderItem.quantity));
-                                        total += product.price * orderItem.quantity;
+                                        if (orderItem.orderId == order.id)
+                                        {
+                                            foreach(Product product in products)
+                                            {
+                                                if(product.id == orderItem.productId)
+                                                {
+                                                    Console.WriteLine(product.name + ": " + orderItem.quantity + " X $" + product.price + " = $" + (product.price * orderItem.quantity));
+                                                    total += product.price * orderItem.quantity;
+                                                }
+                                            }
+                                        }
                                     }
+                                    Console.WriteLine("Total: $" + total);
+                                    total = 0;
                                 }
+                                exit = true;
                             }
                         }
-                        Console.WriteLine("Total: $" + total);
-                        exit = true;
                     }
-                }
+                }                
             }
         } while(!exit);
     }

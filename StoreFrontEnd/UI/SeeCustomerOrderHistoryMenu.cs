@@ -67,9 +67,9 @@ internal class SeeCustomerOrderHistoryMenu
                             }
                         }
                         Console.WriteLine("Total: $" + total);
-                        exit = true;
                     }
                 }
+                exit = true;
             }
         } while(!exit);
     }

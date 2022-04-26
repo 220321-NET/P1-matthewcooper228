@@ -14,4 +14,5 @@ public interface IStoreBL
     OrderItem CreateOrderItem(OrderItem orderItemToCreate);
     public Task decrementInventoryItemAsync(InventoryItem inventoryItem);
     public Task incrementOrderItemAsync(OrderItem orderItem);
+    public Task replenishStoreInventoryAsync(Store store);
 }

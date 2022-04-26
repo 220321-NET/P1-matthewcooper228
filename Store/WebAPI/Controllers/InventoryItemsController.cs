@@ -28,6 +28,4 @@ public class InventoryItemsController : ControllerBase
     {
         await _bl.decrementInventoryItemAsync(inventoryItem);
     }
-
-
 }

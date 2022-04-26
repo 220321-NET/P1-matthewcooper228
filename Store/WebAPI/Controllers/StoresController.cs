@@ -23,4 +23,9 @@ public class StoresController : ControllerBase
     {
         return await _bl.GetStoresAsync();
     }
+    [HttpPut]
+    public async Task replenishStoreInventoryAsync(Store store)
+    {
+        await _bl.replenishStoreInventoryAsync(store);
+    }
 }
