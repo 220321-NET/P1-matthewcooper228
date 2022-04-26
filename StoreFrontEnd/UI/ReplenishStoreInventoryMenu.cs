@@ -2,10 +2,10 @@ using System.Text.RegularExpressions;
 using Models;
 
 namespace UI;
-internal class PlaceAnOrderMenu
+internal class ReplenishStoreInventoryMenu
 {
     private readonly HttpService _httpService;
-    public PlaceAnOrderMenu(HttpService httpService)
+    public ReplenishStoreInventoryMenu(HttpService httpService)
     {
         _httpService = httpService;
     }
