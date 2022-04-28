@@ -33,7 +33,7 @@ Future to-do list:
 ## Usage
 
 > Choose an option by typing a number or X and pressing enter. Use option 1 to create an account, option 2 to check if you have an account, option 3 to browse a storefront's inventory, option 4 to view your order history, and option 5 to place an order at a storefront.
-![Menu for placing an order.](./Capture.PNG "Place an order menu")
+![Menu for placing an order.](./Capture2.PNG "Place an order menu")
 
 ## License
 
