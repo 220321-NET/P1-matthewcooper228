@@ -1,0 +1,8 @@
+<button *ngIf="displayFirstButton" (click)="displayFirstButton = false; displayChooseAStore = true;">look at the inventory of a store</button>
+<div *ngIf="displayChooseAStore">
+  <h1>Pick a store to see its inventory</h1>
+  <div *ngFor="let store in stores">
+    {{store.address}} <button>shop</button>
+  </div>
+  <button (click)="displayChooseAStore = false; displayFirstButton = true;">back</button>
+</div>
